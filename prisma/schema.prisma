@@ -8,15 +8,18 @@ datasource db {
 }
 
 model User {
-  id            String   @id
-  name          String
-  age           Int
-  photo         String
-  bio           String
-  cityOrCollege String
-  interests     String   // JSON string of string[]
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String   @id
+  name           String
+  age            Int
+  photo          String
+  bio            String
+  cityOrCollege  String
+  interests      String   // JSON string of string[]
+  photos         String?  // JSON string of string[] (additional photos)
+  promptQuestion String?  // Optional Coy prompt question
+  promptAnswer   String?  // Optional Coy prompt answer
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   swipesGiven    Swipe[] @relation("SwipesGiven")
   swipesReceived Swipe[] @relation("SwipesReceived")

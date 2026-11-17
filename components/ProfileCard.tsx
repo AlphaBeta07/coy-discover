@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useTransform, PanInfo } from "framer-motion";
-import { MapPin, GraduationCap, Sparkles } from "lucide-react";
+import { MapPin, GraduationCap, Info } from "lucide-react";
 import { PublicProfile } from "@/lib/matching";
 
 interface ProfileCardProps {
   profile: PublicProfile;
   isFront: boolean;
   onSwipe: (action: "like" | "pass") => void;
+  onOpenDetails?: (profile: PublicProfile) => void;
   disabled?: boolean;
 }
 
@@ -22,17 +23,31 @@ const INTEREST_COLORS = [
   "bg-coy-peach/80",
 ];
 
-export function ProfileCard({ profile, isFront, onSwipe, disabled = false }: ProfileCardProps) {
+export function ProfileCard({
+  profile,
+  isFront,
+  onSwipe,
+  onOpenDetails,
+  disabled = false,
+}: ProfileCardProps) {
   const [imageError, setImageError] = useState(false);
   const [hasSwiped, setHasSwiped] = useState(false);
+  const isDraggingRef = useRef(false);
 
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-16, 16]);
   const likeOpacity = useTransform(x, [20, 100], [0, 1]);
   const passOpacity = useTransform(x, [-20, -100], [0, 1]);
 
+  const handleDragStart = () => {
+    isDraggingRef.current = true;
+  };
+
   const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (disabled || hasSwiped) return;
+    if (disabled || hasSwiped) {
+      isDraggingRef.current = false;
+      return;
+    }
 
     const threshold = 100;
     const velocityThreshold = 400;
@@ -43,6 +58,17 @@ export function ProfileCard({ profile, isFront, onSwipe, disabled = false }: Pro
     } else if (info.offset.x < -threshold || info.velocity.x < -velocityThreshold) {
       setHasSwiped(true);
       onSwipe("pass");
+    }
+
+    // Reset dragging flag after gesture completes so click doesn't misfire
+    setTimeout(() => {
+      isDraggingRef.current = false;
+    }, 100);
+  };
+
+  const handleCardTap = () => {
+    if (!isDraggingRef.current && !hasSwiped && onOpenDetails) {
+      onOpenDetails(profile);
     }
   };
 
@@ -88,7 +114,9 @@ export function ProfileCard({ profile, isFront, onSwipe, disabled = false }: Pro
       drag={disabled ? false : "x"}
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.7}
+      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      onTap={handleCardTap}
       whileTap={{ cursor: "grabbing" }}
       className="absolute inset-0 w-full h-full bg-white border-2 border-coy-text rounded-[26px] shadow-[6px_6px_0_#15121D] overflow-hidden flex flex-col cursor-grab select-none z-10 touch-none"
     >
@@ -121,6 +149,14 @@ export function ProfileCard({ profile, isFront, onSwipe, disabled = false }: Pro
         {/* Subtle gradient vignette at bottom of photo for seamless contrast */}
         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
 
+        {/* Tap indicator pill */}
+        <div className="absolute top-3 right-3 z-10 flex items-center gap-1 px-2.5 py-1 bg-white/95 backdrop-blur-sm border-2 border-coy-text rounded-full shadow-[2px_2px_0_#15121D] pointer-events-none">
+          <Info className="w-3.5 h-3.5 text-coy-pink-strong" />
+          <span className="text-[10px] font-black uppercase tracking-wider text-coy-text">
+            Tap for bio
+          </span>
+        </div>
+
         {/* Age pill overlay */}
         <div className="absolute bottom-3 right-3 px-3 py-1 bg-white/95 backdrop-blur-sm border-2 border-coy-text rounded-full shadow-[2px_2px_0_#15121D]">
           <span className="font-black text-sm text-coy-text">{profile.age} yrs</span>
@@ -138,7 +174,12 @@ export function ProfileCard({ profile, isFront, onSwipe, disabled = false }: Pro
           </div>
 
           <div className="flex items-center gap-1.5 text-xs font-semibold text-coy-muted mt-0.5">
-            {profile.cityOrCollege.includes("/") || profile.cityOrCollege.toLowerCase().includes("college") || profile.cityOrCollege.toLowerCase().includes("university") || profile.cityOrCollege.toLowerCase().includes("institute") || profile.cityOrCollege.toLowerCase().includes("iit") || profile.cityOrCollege.toLowerCase().includes("bits") ? (
+            {profile.cityOrCollege.includes("/") ||
+            profile.cityOrCollege.toLowerCase().includes("college") ||
+            profile.cityOrCollege.toLowerCase().includes("university") ||
+            profile.cityOrCollege.toLowerCase().includes("institute") ||
+            profile.cityOrCollege.toLowerCase().includes("iit") ||
+            profile.cityOrCollege.toLowerCase().includes("bits") ? (
               <GraduationCap className="w-3.5 h-3.5 text-coy-pink-strong shrink-0" />
             ) : (
               <MapPin className="w-3.5 h-3.5 text-coy-pink-strong shrink-0" />

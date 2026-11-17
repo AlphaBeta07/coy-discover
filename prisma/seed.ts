@@ -12,6 +12,9 @@ export const MOCK_CURRENT_USER = {
   bio: "Tech, indie rock, filter coffee, and rooftop sunsets. Building things that matter.",
   cityOrCollege: "BITS Pilani / Bengaluru",
   interests: JSON.stringify(["Indie Music", "Filter Coffee", "Startups", "Badminton", "Film Photography"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "The key to my heart is...",
+    promptAnswer: "Cutting chai from the corner tapri, finding a first edition Penguin classic, and spontaneous late-night walks.",
 };
 
 export const MOCK_PROFILES = [
@@ -23,6 +26,9 @@ export const MOCK_PROFILES = [
     bio: "Literature major who quotes Dostoevsky in casual conversation. Chai over coffee any day.",
     cityOrCollege: "Lady Shri Ram College, Delhi",
     interests: JSON.stringify(["Reading", "Chai", "Classic Cinema", "Poetry", "Museum Hopping"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "A typical Sunday for me looks like...",
+    promptAnswer: "Wandering through the arts district with a 35mm film camera, hunting for the finest almond croissant, and sketching arches.",
     preLikesMe: true, // Seeded to have liked user_me
   },
   {
@@ -33,6 +39,9 @@ export const MOCK_PROFILES = [
     bio: "Architecture nerd obsessed with art deco buildings and candid photography. Let's find Mumbai's best matcha.",
     cityOrCollege: "KRVIA / Mumbai",
     interests: JSON.stringify(["Architecture", "Street Photography", "Matcha", "Vinyl Records", "Trekking"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "We'll get along if...",
+    promptAnswer: "You don't mind impromptu bass jam sessions, love roadside street food, and have strong opinions about cinema.",
     preLikesMe: true, // Seeded to have liked user_me
   },
   {
@@ -43,6 +52,9 @@ export const MOCK_PROFILES = [
     bio: "Fintech analyst by day, amateur bass guitarist by night. Can cook a mean butter chicken.",
     cityOrCollege: "IIT Delhi",
     interests: JSON.stringify(["Bass Guitar", "Cooking", "Football", "Formula 1", "Podcasts"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "My simple pleasures...",
+    promptAnswer: "The smell of fresh oil paint, pottery wheel throwing, and cold iced brew on a humid afternoon.",
     preLikesMe: false,
   },
   {
@@ -53,6 +65,9 @@ export const MOCK_PROFILES = [
     bio: "Psychology student exploring cognitive quirks and thrift store gems. Sarcasm is my love language.",
     cityOrCollege: "St. Xavier's College, Mumbai",
     interests: JSON.stringify(["Thrifting", "Psychology", "Indie Rock", "Board Games", "Sunset Walks"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "Two truths and a lie...",
+    promptAnswer: "I've backpacked across Spiti Valley solo, won a state badminton championship, and have never watched DDLJ.",
     preLikesMe: false,
   },
   {
@@ -63,6 +78,9 @@ export const MOCK_PROFILES = [
     bio: "Graphic designer living on iced Americanos and Figma shortcuts. Send me your favorite album artwork.",
     cityOrCollege: "NID Ahmedabad",
     interests: JSON.stringify(["Graphic Design", "Typography", "Iced Coffee", "Modern Art", "Ceramics"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "I get irrationally excited about...",
+    promptAnswer: "Vintage flea markets, discovering obscure 70s funk albums on Spotify, and dogs that smile back.",
     preLikesMe: true, // Seeded to have liked user_me
   },
   {
@@ -73,6 +91,9 @@ export const MOCK_PROFILES = [
     bio: "Founder building sustainable packaging. Weekends spent on trails or debating Premier League tactics.",
     cityOrCollege: "IIT Bombay",
     interests: JSON.stringify(["Trail Running", "Arsenal FC", "Sustainability", "Reading", "Coffee"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "The best way to ask me out...",
+    promptAnswer: "Propose a museum visit followed by street food debates on which city has the best momos.",
     preLikesMe: false,
   },
   {
@@ -83,6 +104,9 @@ export const MOCK_PROFILES = [
     bio: "Journalism grad, passionate about investigative storytelling and obscure 70s rock.",
     cityOrCollege: "Ashoka University",
     interests: JSON.stringify(["Journalism", "70s Rock", "Docuseries", "Writing", "Baking"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "Favorite campus memory...",
+    promptAnswer: "Sitting on the hostel terrace during the first monsoon downpour listening to indie rock.",
     preLikesMe: true, // Seeded to have liked user_me
   },
   {
@@ -93,6 +117,9 @@ export const MOCK_PROFILES = [
     bio: "Biotech researcher discovering new microbes and old bookshops. Also an unironic karaoke champion.",
     cityOrCollege: "IISc Bengaluru",
     interests: JSON.stringify(["Karaoke", "Biotech", "Sci-Fi", "Badminton", "Old Bookstores"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "The key to my heart is...",
+    promptAnswer: "Cutting chai from the corner tapri, finding a first edition Penguin classic, and spontaneous late-night walks.",
     preLikesMe: true, // Seeded to have liked user_me
   },
   {
@@ -103,6 +130,9 @@ export const MOCK_PROFILES = [
     bio: "Lawyer in training. Looking for someone who can hold their own in a debate on pop culture.",
     cityOrCollege: "NLSIU Bengaluru",
     interests: JSON.stringify(["Debate", "Tennis", "Cinema", "Espresso", "Stand-Up Comedy"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "A typical Sunday for me looks like...",
+    promptAnswer: "Wandering through the arts district with a 35mm film camera, hunting for the finest almond croissant, and sketching arches.",
     preLikesMe: false,
   },
   {
@@ -113,6 +143,9 @@ export const MOCK_PROFILES = [
     bio: "Dance enthusiast and AI researcher. Balancing Bharatanatyam mudras with neural network gradients.",
     cityOrCollege: "IIIT Hyderabad",
     interests: JSON.stringify(["Dance", "Deep Learning", "Filter Coffee", "Dogs", "Acoustic Guitar"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "We'll get along if...",
+    promptAnswer: "You don't mind impromptu bass jam sessions, love roadside street food, and have strong opinions about cinema.",
     preLikesMe: false,
   },
   {
@@ -123,6 +156,9 @@ export const MOCK_PROFILES = [
     bio: "Documentary filmmaker. Currently making a film on India's indie coffee culture.",
     cityOrCollege: "FTII Pune",
     interests: JSON.stringify(["Filmmaking", "Specialty Coffee", "Cycling", "Vinyls", "Travel"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "My simple pleasures...",
+    promptAnswer: "The smell of fresh oil paint, pottery wheel throwing, and cold iced brew on a humid afternoon.",
     preLikesMe: false,
   },
   {
@@ -133,6 +169,9 @@ export const MOCK_PROFILES = [
     bio: "Economics graduate who over-analyzes cafe aesthetics. Big fan of sunset picnics and fleamarkets.",
     cityOrCollege: "Presidency University, Kolkata",
     interests: JSON.stringify(["Economics", "Picnics", "Fleamarkets", "Indie Pop", "Crochet"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "Two truths and a lie...",
+    promptAnswer: "I've backpacked across Spiti Valley solo, won a state badminton championship, and have never watched DDLJ.",
     preLikesMe: true, // Seeded to have liked user_me
   },
   {
@@ -143,6 +182,9 @@ export const MOCK_PROFILES = [
     bio: "Mechanical engineer building electric go-karts. Always down for late night drives and street food.",
     cityOrCollege: "Manipal Institute of Technology",
     interests: JSON.stringify(["Motorsport", "Night Drives", "Street Food", "Rock Climbing", "Gaming"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "I get irrationally excited about...",
+    promptAnswer: "Vintage flea markets, discovering obscure 70s funk albums on Spotify, and dogs that smile back.",
     preLikesMe: false,
   },
   {
@@ -153,6 +195,9 @@ export const MOCK_PROFILES = [
     bio: "Fashion styling and visual merchandising. If your outfit has pockets, we're already friends.",
     cityOrCollege: "NIFT Delhi",
     interests: JSON.stringify(["Fashion", "Vintage Clothes", "Pottery", "R&B", "Sushi"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "The best way to ask me out...",
+    promptAnswer: "Propose a museum visit followed by street food debates on which city has the best momos.",
     preLikesMe: true, // Seeded to have liked user_me
   },
   {
@@ -163,6 +208,9 @@ export const MOCK_PROFILES = [
     bio: "Urban planner on a mission to make cities walkable. Loves jazz, rooftop gardening, and good sourdough.",
     cityOrCollege: "CEPT University, Ahmedabad",
     interests: JSON.stringify(["Urbanism", "Jazz", "Gardening", "Baking", "Cycling"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "Favorite campus memory...",
+    promptAnswer: "Sitting on the hostel terrace during the first monsoon downpour listening to indie rock.",
     preLikesMe: true, // Seeded to have liked user_me
   },
   {
@@ -173,6 +221,9 @@ export const MOCK_PROFILES = [
     bio: "Product manager who plays keyboard in an amateur jazz quartet. Tell me your top 3 songs of all time.",
     cityOrCollege: "IIT Kharagpur",
     interests: JSON.stringify(["Keyboard", "Jazz", "Product Design", "Swimming", "Chess"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "The key to my heart is...",
+    promptAnswer: "Cutting chai from the corner tapri, finding a first edition Penguin classic, and spontaneous late-night walks.",
     preLikesMe: false,
   },
   {
@@ -183,6 +234,9 @@ export const MOCK_PROFILES = [
     bio: "Zoology student fascinated by bird calls and ecology. Will stop to pet every stray dog on the street.",
     cityOrCollege: "Fergusson College, Pune",
     interests: JSON.stringify(["Wildlife", "Birding", "Trekking", "Dogs", "Watercolor"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "A typical Sunday for me looks like...",
+    promptAnswer: "Wandering through the arts district with a 35mm film camera, hunting for the finest almond croissant, and sketching arches.",
     preLikesMe: false,
   },
   {
@@ -193,6 +247,9 @@ export const MOCK_PROFILES = [
     bio: "Aerospace engineer dreaming of Mars rovers. I make killer pour-overs and bad science jokes.",
     cityOrCollege: "IIT Madras",
     interests: JSON.stringify(["Space Exploration", "Pour-over Coffee", "Physics", "Sci-Fi", "Guitar"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "We'll get along if...",
+    promptAnswer: "You don't mind impromptu bass jam sessions, love roadside street food, and have strong opinions about cinema.",
     preLikesMe: false,
   },
   {
@@ -203,6 +260,9 @@ export const MOCK_PROFILES = [
     bio: "Media & communication student. Always listening to podcasts on 1.5x speed. Obsessed with stationery.",
     cityOrCollege: "Christ University, Bengaluru",
     interests: JSON.stringify(["Podcasts", "Stationery", "Pop Culture", "Photography", "Running"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "My simple pleasures...",
+    promptAnswer: "The smell of fresh oil paint, pottery wheel throwing, and cold iced brew on a humid afternoon.",
     preLikesMe: false,
   },
   {
@@ -213,6 +273,9 @@ export const MOCK_PROFILES = [
     bio: "Data scientist working on climate models. In search of the city's finest ramen bowl.",
     cityOrCollege: "Delhi School of Economics",
     interests: JSON.stringify(["Ramen", "Climate Tech", "Running", "Synthwave", "Chess"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "Two truths and a lie...",
+    promptAnswer: "I've backpacked across Spiti Valley solo, won a state badminton championship, and have never watched DDLJ.",
     preLikesMe: false,
   },
   {
@@ -223,6 +286,9 @@ export const MOCK_PROFILES = [
     bio: "Classical violinist venturing into electronic fusion. Tea enthusiast, vintage poster collector.",
     cityOrCollege: "KM Music Conservatory, Chennai",
     interests: JSON.stringify(["Violin", "Electronic Music", "Tea Tasting", "Vintage Art", "Yoga"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "I get irrationally excited about...",
+    promptAnswer: "Vintage flea markets, discovering obscure 70s funk albums on Spotify, and dogs that smile back.",
     preLikesMe: false,
   },
   {
@@ -233,6 +299,9 @@ export const MOCK_PROFILES = [
     bio: "UX researcher who loves understanding human irrationality. Host of legendary game nights.",
     cityOrCollege: "National Institute of Design, Bengaluru",
     interests: JSON.stringify(["Board Games", "UX Design", "Cooking", "Catan", "Indie Games"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "The best way to ask me out...",
+    promptAnswer: "Propose a museum visit followed by street food debates on which city has the best momos.",
     preLikesMe: false,
   },
   {
@@ -243,6 +312,9 @@ export const MOCK_PROFILES = [
     bio: "Comparative literature scholar. I believe monsoon rain in Kolkata solves almost everything.",
     cityOrCollege: "Jadavpur University, Kolkata",
     interests: JSON.stringify(["Literature", "Monsoon", "Bengali Sweets", "Film Studies", "Painting"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "Favorite campus memory...",
+    promptAnswer: "Sitting on the hostel terrace during the first monsoon downpour listening to indie rock.",
     preLikesMe: false,
   },
   {
@@ -253,6 +325,9 @@ export const MOCK_PROFILES = [
     bio: "Culinary arts student exploring modern Indian pastry. Warning: might send unannounced desserts.",
     cityOrCollege: "Welcomgroup Graduate School, Manipal",
     interests: JSON.stringify(["Baking", "Pastry Art", "Food Styling", "Travel", "Hip Hop"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "The key to my heart is...",
+    promptAnswer: "Cutting chai from the corner tapri, finding a first edition Penguin classic, and spontaneous late-night walks.",
     preLikesMe: false,
   },
   {
@@ -263,6 +338,9 @@ export const MOCK_PROFILES = [
     bio: "Marine biology student and certified scuba diver. Happiness is 20 meters underwater with mantas.",
     cityOrCollege: "Goa University",
     interests: JSON.stringify(["Scuba Diving", "Ocean Conservation", "Surfing", "Ukulele", "Sunsets"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "A typical Sunday for me looks like...",
+    promptAnswer: "Wandering through the arts district with a 35mm film camera, hunting for the finest almond croissant, and sketching arches.",
     preLikesMe: true, // Seeded to have liked user_me
   },
   {
@@ -273,6 +351,9 @@ export const MOCK_PROFILES = [
     bio: "Strategy consultant who decompresses through bouldering and making playlists for every mood.",
     cityOrCollege: "SRCC Delhi",
     interests: JSON.stringify(["Bouldering", "Playlists", "Economics", "Formula 1", "Cocktails"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "We'll get along if...",
+    promptAnswer: "You don't mind impromptu bass jam sessions, love roadside street food, and have strong opinions about cinema.",
     preLikesMe: false,
   },
   {
@@ -283,6 +364,9 @@ export const MOCK_PROFILES = [
     bio: "Heritage conservationist saving historic havelis and colonial facades. Enjoys vintage trams.",
     cityOrCollege: "SPA New Delhi",
     interests: JSON.stringify(["Heritage", "Architecture", "Sketching", "Filter Kaapi", "Heritage Walks"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "My simple pleasures...",
+    promptAnswer: "The smell of fresh oil paint, pottery wheel throwing, and cold iced brew on a humid afternoon.",
     preLikesMe: false,
   },
   {
@@ -293,6 +377,9 @@ export const MOCK_PROFILES = [
     bio: "Robotics engineer building robotic grippers. Also an aspiring marathoner (slowly but surely).",
     cityOrCollege: "COEP Pune",
     interests: JSON.stringify(["Robotics", "Marathon Training", "Anime", "Woodworking", "Coffee"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "Two truths and a lie...",
+    promptAnswer: "I've backpacked across Spiti Valley solo, won a state badminton championship, and have never watched DDLJ.",
     preLikesMe: false,
   },
   {
@@ -303,6 +390,9 @@ export const MOCK_PROFILES = [
     bio: "Animation artist crafting whimsical 2D loops. Obsessed with Studio Ghibli and matcha ice cream.",
     cityOrCollege: "Srishti Institute of Art, Bengaluru",
     interests: JSON.stringify(["Animation", "Studio Ghibli", "Matcha", "Illustration", "Cats"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "I get irrationally excited about...",
+    promptAnswer: "Vintage flea markets, discovering obscure 70s funk albums on Spotify, and dogs that smile back.",
     preLikesMe: false,
   },
   {
@@ -313,6 +403,9 @@ export const MOCK_PROFILES = [
     bio: "Astrophysics student peering into dark matter. Let's head out of town for stargazing.",
     cityOrCollege: "IUCAA Pune",
     interests: JSON.stringify(["Astronomy", "Stargazing", "Physics", "Camping", "Pink Floyd"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "The best way to ask me out...",
+    promptAnswer: "Propose a museum visit followed by street food debates on which city has the best momos.",
     preLikesMe: false,
   },
   {
@@ -323,6 +416,9 @@ export const MOCK_PROFILES = [
     bio: "Content strategist who collects old stamps and writes personal essays. Always searching for the best chaat.",
     cityOrCollege: "Panjab University, Chandigarh",
     interests: JSON.stringify(["Writing", "Chaat", "Vintage Stamps", "Photography", "Road Trips"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "Favorite campus memory...",
+    promptAnswer: "Sitting on the hostel terrace during the first monsoon downpour listening to indie rock.",
     preLikesMe: false,
   },
   {
@@ -333,6 +429,9 @@ export const MOCK_PROFILES = [
     bio: "Sound designer for indie video games. Lover of ambient synths, rain sounds, and spicy food.",
     cityOrCollege: "National Institute of Design, Ahmedabad",
     interests: JSON.stringify(["Sound Design", "Indie Games", "Ambient Music", "Synthesizers", "Cooking"]),
+    photos: JSON.stringify(["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80"]),
+    promptQuestion: "The key to my heart is...",
+    promptAnswer: "Cutting chai from the corner tapri, finding a first edition Penguin classic, and spontaneous late-night walks.",
     preLikesMe: false,
   },
 ];

@@ -7,6 +7,7 @@ import { SwipeButtons } from "@/components/SwipeButtons";
 import { MatchModal } from "@/components/MatchModal";
 import { EmptyState } from "@/components/EmptyState";
 import { LoadingCard } from "@/components/LoadingCard";
+import { ProfileDetailModal } from "@/components/ProfileDetailModal";
 
 export default function DiscoverPage() {
   const [profiles, setProfiles] = useState<PublicProfile[]>([]);
@@ -16,6 +17,10 @@ export default function DiscoverPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [matchedProfile, setMatchedProfile] = useState<PublicProfile | null>(null);
+
+  // Profile Details Modal State
+  const [selectedProfile, setSelectedProfile] = useState<PublicProfile | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const fetchFeed = useCallback(async () => {
     try {
@@ -77,10 +82,29 @@ export default function DiscoverPage() {
     [isSubmitting, currentIndex, profiles]
   );
 
-  // Keyboard accessibility: Left Arrow -> Pass, Right Arrow -> Like
+  const handleOpenDetails = useCallback((profile: PublicProfile) => {
+    setSelectedProfile(profile);
+    setIsDetailOpen(true);
+  }, []);
+
+  const handleCloseDetails = useCallback(() => {
+    setIsDetailOpen(false);
+  }, []);
+
+  const handleDetailLike = useCallback(() => {
+    setIsDetailOpen(false);
+    handleSwipe("like");
+  }, [handleSwipe]);
+
+  const handleDetailPass = useCallback(() => {
+    setIsDetailOpen(false);
+    handleSwipe("pass");
+  }, [handleSwipe]);
+
+  // Keyboard accessibility: Left Arrow -> Pass, Right Arrow -> Like (only when modal is not open)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (matchedProfile || loading || currentIndex >= profiles.length) return;
+      if (matchedProfile || loading || currentIndex >= profiles.length || isDetailOpen) return;
 
       if (e.key === "ArrowLeft") {
         e.preventDefault();
@@ -93,7 +117,7 @@ export default function DiscoverPage() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleSwipe, matchedProfile, loading, currentIndex, profiles.length]);
+  }, [handleSwipe, matchedProfile, loading, currentIndex, profiles.length, isDetailOpen]);
 
   const handleResetFeed = async () => {
     try {
@@ -156,12 +180,13 @@ export default function DiscoverPage() {
               />
             )}
 
-            {/* Foreground top card with swipe gestures */}
+            {/* Foreground top card with swipe gestures and click-to-view */}
             <ProfileCard
               key={currentCard.id}
               profile={currentCard}
               isFront={true}
               onSwipe={handleSwipe}
+              onOpenDetails={handleOpenDetails}
               disabled={isSubmitting}
             />
           </>
@@ -182,6 +207,16 @@ export default function DiscoverPage() {
           disabled={isSubmitting}
         />
       )}
+
+      {/* Interactive Profile Details Modal */}
+      <ProfileDetailModal
+        profile={selectedProfile}
+        isOpen={isDetailOpen}
+        onClose={handleCloseDetails}
+        onLike={handleDetailLike}
+        onPass={handleDetailPass}
+        isSubmitting={isSubmitting}
+      />
 
       {/* Mutual Match Celebration Modal */}
       {matchedProfile && (

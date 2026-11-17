@@ -15,6 +15,9 @@ export interface PublicProfile {
   bio: string;
   cityOrCollege: string;
   interests: string[];
+  photos?: string[];
+  promptQuestion?: string;
+  promptAnswer?: string;
 }
 
 export interface MatchResult {
@@ -40,6 +43,51 @@ export interface MutualMatchItem {
  */
 export function normalizeMatchPair(userA: string, userB: string): [string, string] {
   return userA < userB ? [userA, userB] : [userB, userA];
+}
+
+/**
+ * Formats a raw database user into a clean PublicProfile object.
+ */
+export function mapUserToPublicProfile(u: {
+  id: string;
+  name: string;
+  age: number;
+  photo: string;
+  bio: string;
+  cityOrCollege: string;
+  interests: string;
+  photos?: string | null;
+  promptQuestion?: string | null;
+  promptAnswer?: string | null;
+}): PublicProfile {
+  let parsedInterests: string[] = [];
+  try {
+    parsedInterests = JSON.parse(u.interests);
+  } catch {
+    parsedInterests = u.interests ? u.interests.split(",").map((s) => s.trim()) : [];
+  }
+
+  let parsedPhotos: string[] = [];
+  if (u.photos) {
+    try {
+      parsedPhotos = JSON.parse(u.photos);
+    } catch {
+      parsedPhotos = [];
+    }
+  }
+
+  return {
+    id: u.id,
+    name: u.name,
+    age: u.age,
+    photo: u.photo,
+    bio: u.bio,
+    cityOrCollege: u.cityOrCollege,
+    interests: parsedInterests,
+    photos: parsedPhotos.length > 0 ? parsedPhotos : undefined,
+    promptQuestion: u.promptQuestion || undefined,
+    promptAnswer: u.promptAnswer || undefined,
+  };
 }
 
 /**
@@ -69,30 +117,16 @@ export async function getFeedProfiles(currentUserId: string): Promise<PublicProf
       bio: true,
       cityOrCollege: true,
       interests: true,
+      photos: true,
+      promptQuestion: true,
+      promptAnswer: true,
     },
     orderBy: {
       createdAt: "asc",
     },
   });
 
-  return rawUsers.map((u) => {
-    let parsedInterests: string[] = [];
-    try {
-      parsedInterests = JSON.parse(u.interests);
-    } catch {
-      parsedInterests = u.interests ? u.interests.split(",").map((s) => s.trim()) : [];
-    }
-
-    return {
-      id: u.id,
-      name: u.name,
-      age: u.age,
-      photo: u.photo,
-      bio: u.bio,
-      cityOrCollege: u.cityOrCollege,
-      interests: parsedInterests,
-    };
-  });
+  return rawUsers.map(mapUserToPublicProfile);
 }
 
 /**
@@ -133,26 +167,12 @@ export async function recordSwipe(
         });
 
         if (existingMatch) {
-          let interests: string[] = [];
-          try {
-            interests = JSON.parse(targetUser.interests);
-          } catch {
-            interests = [];
-          }
           return {
             success: true,
             matched: true,
             match: {
               id: existingMatch.id,
-              profile: {
-                id: targetUser.id,
-                name: targetUser.name,
-                age: targetUser.age,
-                photo: targetUser.photo,
-                bio: targetUser.bio,
-                cityOrCollege: targetUser.cityOrCollege,
-                interests,
-              },
+              profile: mapUserToPublicProfile(targetUser),
               matchedAt: existingMatch.createdAt.toISOString(),
             },
           };
@@ -208,27 +228,12 @@ export async function recordSwipe(
         update: {},
       });
 
-      let interests: string[] = [];
-      try {
-        interests = JSON.parse(targetUser.interests);
-      } catch {
-        interests = [];
-      }
-
       return {
         success: true,
         matched: true,
         match: {
           id: match.id,
-          profile: {
-            id: targetUser.id,
-            name: targetUser.name,
-            age: targetUser.age,
-            photo: targetUser.photo,
-            bio: targetUser.bio,
-            cityOrCollege: targetUser.cityOrCollege,
-            interests,
-          },
+          profile: mapUserToPublicProfile(targetUser),
           matchedAt: match.createdAt.toISOString(),
         },
       };
@@ -261,25 +266,10 @@ export async function getUserMatches(currentUserId: string): Promise<MutualMatch
 
   return matches.map((m) => {
     const otherUser = m.user1Id === currentUserId ? m.user2 : m.user1;
-    let parsedInterests: string[] = [];
-    try {
-      parsedInterests = JSON.parse(otherUser.interests);
-    } catch {
-      parsedInterests = [];
-    }
-
     return {
       id: m.id,
       matchedAt: m.createdAt.toISOString(),
-      profile: {
-        id: otherUser.id,
-        name: otherUser.name,
-        age: otherUser.age,
-        photo: otherUser.photo,
-        bio: otherUser.bio,
-        cityOrCollege: otherUser.cityOrCollege,
-        interests: parsedInterests,
-      },
+      profile: mapUserToPublicProfile(otherUser),
     };
   });
 }

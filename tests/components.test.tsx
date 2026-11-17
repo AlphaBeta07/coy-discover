@@ -6,6 +6,8 @@ import { BottomNav } from "@/components/BottomNav";
 import { SwipeButtons } from "@/components/SwipeButtons";
 import { EmptyState } from "@/components/EmptyState";
 import { MatchModal } from "@/components/MatchModal";
+import { ProfileDetailModal } from "@/components/ProfileDetailModal";
+import { ProfileCard } from "@/components/ProfileCard";
 import HomePage from "@/app/page";
 
 // Mock next/navigation
@@ -17,6 +19,19 @@ vi.mock("next/navigation", () => ({
 vi.mock("canvas-confetti", () => ({
   default: vi.fn(),
 }));
+
+const mockProfile = {
+  id: "user_101",
+  name: "Priya Sharma",
+  age: 21,
+  photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb",
+  bio: "Literature major who quotes Dostoevsky in casual conversation.",
+  cityOrCollege: "Lady Shri Ram College, Delhi",
+  interests: ["Reading", "Chai", "Poetry"],
+  photos: ["https://images.unsplash.com/photo-1517841905240-472988babdf9"],
+  promptQuestion: "The key to my heart is...",
+  promptAnswer: "Cutting chai from the corner tapri.",
+};
 
 describe("Frontend Components & UI Test Suite", () => {
   it("renders Navbar with Coy branding and action buttons", () => {
@@ -65,15 +80,6 @@ describe("Frontend Components & UI Test Suite", () => {
 
   it("renders MatchModal with celebratory message, profile name, and action buttons", () => {
     const handleClose = vi.fn();
-    const mockProfile = {
-      id: "user_101",
-      name: "Priya Sharma",
-      age: 21,
-      photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb",
-      bio: "Literature major",
-      cityOrCollege: "Lady Shri Ram College, Delhi",
-      interests: ["Reading", "Chai"],
-    };
 
     render(<MatchModal matchedProfile={mockProfile} onClose={handleClose} />);
 
@@ -83,6 +89,64 @@ describe("Frontend Components & UI Test Suite", () => {
     expect(screen.getByText("Keep Swiping")).toBeInTheDocument();
 
     fireEvent.click(screen.getByText("Keep Swiping"));
+    expect(handleClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("renders ProfileCard and shows tap cue without accidental swipe", () => {
+    const handleSwipe = vi.fn();
+    const handleOpenDetails = vi.fn();
+
+    render(
+      <ProfileCard
+        profile={mockProfile}
+        isFront={true}
+        onSwipe={handleSwipe}
+        onOpenDetails={handleOpenDetails}
+      />
+    );
+
+    expect(screen.getByText("Priya Sharma")).toBeInTheDocument();
+    expect(screen.getByText("Tap for bio")).toBeInTheDocument();
+    expect(screen.getByText("Reading")).toBeInTheDocument();
+  });
+
+  it("renders ProfileDetailModal with complete biography, interests, prompts, and controls", () => {
+    const handleClose = vi.fn();
+    const handleLike = vi.fn();
+    const handlePass = vi.fn();
+
+    render(
+      <ProfileDetailModal
+        profile={mockProfile}
+        isOpen={true}
+        onClose={handleClose}
+        onLike={handleLike}
+        onPass={handlePass}
+      />
+    );
+
+    // Profile details verification
+    expect(screen.getByText("Priya Sharma")).toBeInTheDocument();
+    expect(screen.getByText("Lady Shri Ram College, Delhi")).toBeInTheDocument();
+    expect(screen.getByText("Literature major who quotes Dostoevsky in casual conversation.")).toBeInTheDocument();
+    expect(screen.getByText("The key to my heart is...")).toBeInTheDocument();
+    expect(screen.getByText(/Cutting chai from the corner tapri/i)).toBeInTheDocument();
+
+    // Like and Pass buttons inside modal
+    const passBtn = screen.getByLabelText("Pass profile");
+    const likeBtn = screen.getByLabelText("Like profile");
+    expect(passBtn).toBeInTheDocument();
+    expect(likeBtn).toBeInTheDocument();
+
+    fireEvent.click(passBtn);
+    expect(handlePass).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(likeBtn);
+    expect(handleLike).toHaveBeenCalledTimes(1);
+
+    // Back button
+    const backBtn = screen.getByLabelText("Back to Discover");
+    fireEvent.click(backBtn);
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 });

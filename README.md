@@ -155,8 +155,13 @@ Provides a clean, branded landing surface with Coy's wordmark, explaining its pl
 - **Fluid Swipe Gestures:** Drag left to Pass, drag right to Like.
 - **Physical Deck Illusion:** The next card in the deck is rendered underneath with scale `0.96` and offset, giving a tangible physical feeling.
 - **Dynamic Stamps:** As you drag, an animated green **LIKE** or red **PASS** badge dynamically rotates and scales based on displacement.
+- **Interactive Profile Details View:** Tap or click anywhere on the card (or the *"Tap for bio"* indicator) to smoothly expand a rich full-screen / large modal profile view.
+  - Tapping card does NOT trigger a swipe; dragging does NOT accidentally open details.
+  - Displays large photo with multi-photo pagination dots, full biography, complete interests chips, Coy prompt Q&A card, and additional photos gallery.
+  - Independent **Like** and **Pass** action buttons inside the details view that seamlessly integrate with mutual matching and celebration.
+  - Smooth spring animation, background scroll lock, and Escape key / Back button dismissal.
 - **Action Buttons:** Accessible circular buttons with Coy's signature `3px 3px 0 #15121D` drop shadow.
-- **Keyboard Shortcuts:** Press `←` for Pass, `→` for Like.
+- **Keyboard Shortcuts:** Press `←` for Pass, `→` for Like (guarded when details modal is open).
 - **Empty State:** When all 32 profiles are swiped, a celebration screen appears with a **Reset Demo** button.
 
 ### 3. Matches Tab
@@ -178,15 +183,18 @@ Provides a clean, branded landing surface with Coy's wordmark, explaining its pl
 ### Prisma Schema (`prisma/schema.prisma`)
 ```prisma
 model User {
-  id            String   @id
-  name          String
-  age           Int
-  photo         String
-  bio           String
-  cityOrCollege String
-  interests     String   // JSON array of strings
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String   @id
+  name           String
+  age            Int
+  photo          String
+  bio            String
+  cityOrCollege  String
+  interests      String   // JSON array of strings
+  photos         String?  // JSON array of string URLs (additional gallery photos)
+  promptQuestion String?  // Coy prompt question
+  promptAnswer   String?  // Coy prompt answer
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   swipesGiven    Swipe[] @relation("SwipesGiven")
   swipesReceived Swipe[] @relation("SwipesReceived")
