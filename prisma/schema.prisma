@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id
+  name          String
+  age           Int
+  photo         String
+  bio           String
+  cityOrCollege String
+  interests     String   // JSON string of string[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  swipesGiven    Swipe[] @relation("SwipesGiven")
+  swipesReceived Swipe[] @relation("SwipesReceived")
+  matchesAsUser1 Match[] @relation("MatchesUser1")
+  matchesAsUser2 Match[] @relation("MatchesUser2")
+}
+
+model Swipe {
+  id        String   @id @default(cuid())
+  swiperId  String
+  swipedId  String
+  action    String   // "like" | "pass"
+  createdAt DateTime @default(now())
+
+  swiper User @relation("SwipesGiven", fields: [swiperId], references: [id], onDelete: Cascade)
+  swiped User @relation("SwipesReceived", fields: [swipedId], references: [id], onDelete: Cascade)
+
+  @@unique([swiperId, swipedId])
+  @@index([swiperId, action])
+  @@index([swipedId, action])
+}
+
+model Match {
+  id        String   @id @default(cuid())
+  user1Id   String
+  user2Id   String
+  createdAt DateTime @default(now())
+
+  user1 User @relation("MatchesUser1", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2 User @relation("MatchesUser2", fields: [user2Id], references: [id], onDelete: Cascade)
+
+  @@unique([user1Id, user2Id])
+  @@index([user1Id])
+  @@index([user2Id])
+}
