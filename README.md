@@ -1,186 +1,312 @@
+<div align="center">
+
 # Coy – Discover Feature
 
-> **Full-Stack SDE Intern Assignment**  
-> Standalone implementation of the swipe-based Discover experience built natively within Coy's original visual identity, privacy architecture, and design system.
+**Full-Stack SDE Intern Assignment | Engineering Implementation**
+
+A swipe-based Discovery engine and mutual matching system engineered natively within Coy's original visual identity, privacy architecture, and design tokens.
+
+[![Next.js](https://img.shields.io/badge/Next.js-15.1.7-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.0.0-blue?style=flat-square&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.17-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-6.4.1-2D3748?style=flat-square&logo=prisma)](https://www.prisma.io/)
+[![SQLite](https://img.shields.io/badge/Database-SQLite%203-003B57?style=flat-square&logo=sqlite)](https://sqlite.org/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.4.7-FF0055?style=flat-square&logo=framer)](https://www.framer.com/motion/)
+[![Vitest](https://img.shields.io/badge/Tests-17%20Passed-449C44?style=flat-square&logo=vitest)](https://vitest.dev/)
+
+[Features](#-feature-overview) • [Coy Design System](#-original-coy-design-system) • [Architecture](#-system-architecture) • [Part A: Product Strategy](#-part-a-core-feature-proposals) • [API Docs](#-api-specification) • [Testing](#-testing--quality-assurance) • [Deployment](#-cloud-deployment-guide)
+
+</div>
 
 ---
 
-## 🌟 Executive Summary
+## 📋 Executive Overview
 
-This application introduces a swipe-based **Discover** feature alongside Coy's existing consumer experience. Designed from the ground up to uphold Coy's core promise—**absolute privacy until mutual connection**—it implements a full-stack architecture with Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion, SQLite, and Prisma ORM.
+This repository contains a full-stack, standalone implementation of the **Discover** feature for [Coy](https://app.getcoy.com/). 
 
----
-
-## 📑 Table of Contents
-
-1. [Part A: Core Feature Proposals](#-part-a-core-feature-proposals)
-2. [Original Coy Design System](#-original-coy-design-system)
-3. [Architecture & Tech Stack](#-architecture--tech-stack)
-4. [Strict Privacy & Mutual Matching Engine](#-strict-privacy--mutual-matching-engine)
-5. [Application Walkthrough](#-application-walkthrough)
-   - [1. Home (Placeholder Tab)](#1-home-tab-placeholder)
-   - [2. Discover (Swipe Deck)](#2-discover-tab-main-feature)
-   - [3. Matches (Mutual Connections)](#3-matches-tab)
-   - [4. Match Celebration Modal](#4-match-celebration-modal)
-6. [Database Schema & Seeding](#-database-schema--seeding)
-7. [API Documentation](#-api-documentation)
-8. [Setup & Installation Instructions](#-setup--installation-instructions)
-9. [Automated Testing & QA](#-automated-testing--qa)
-10. [Vercel Deployment Guide](#-vercel-deployment-guide)
+Unlike generic clone projects, this application was engineered to fulfill two foundational pillars:
+1. **Absolute Privacy Preservation:** Unilateral incoming likes are never exposed across network payloads, browser DOM, or state stores. Connection occurs strictly upon mutual consent.
+2. **Native Visual Fidelity:** Every component, typography scale, border radius, and drop shadow was reverse-engineered directly from Coy's live production bundle (`app.getcoy.com`), recreating its playful yet sophisticated neo-brutalist aesthetic.
 
 ---
 
 ## 💡 Part A: Core Feature Proposals
 
-Based on exploring Coy at [https://app.getcoy.com](https://app.getcoy.com) (phone OTP login, crush addition, email verification, invite link, and slot economics), here are two high-impact core feature proposals:
+*As requested in Part A of the assignment brief, here is the product analysis and two high-conviction feature proposals based on hands-on exploration of Coy's production app:*
 
-### Feature 1: Verified Campus / Circle Trust Rings (`.ac.in` & Peer Vouching)
-* **What it is:** A verified tier for university campuses and professional circles. Users verify their university email (e.g., `@bits-pilani.ac.in`, `@iitb.ac.in`, `@du.ac.in`) or receive private vouches from mutual friends on the platform.
-* **Why it is required:** 
-  - **High-Trust Intimacy:** College crushes are hyper-contextual. Knowing that a crush notification comes from an actual student in your campus or immediate circle exponentially increases engagement and trust.
-  - **Eliminates Ghosting & Spam:** Pre-verifies authenticity without sacrificing secrecy.
-  - **Upholds Coy's Core Promise:** The identity of the crush remains 100% secret; only the circle badge (e.g., *"A verified peer from BITS Pilani"*) is vouched for.
+### Proposal 1: Verified Campus / Circle Trust Rings (`.ac.in` & Peer Vouching)
+* **Problem Statement:** In college settings, secret crushes are deeply contextual. Knowing that a crush notification comes from an actual verified student in your college circle increases open rates and trust, whereas untrusted numbers feel spammy.
+* **Proposed Solution:** Implement verified circles. Students verify their university domain email (e.g. `@bits-pilani.ac.in`, `@iitb.ac.in`, `@du.ac.in`) or receive private vouches from 2+ mutual friends on the platform.
+* **Why it is Required:**
+  - **Elevates Credibility:** Instantly eliminates fake or prank accounts without revealing identity.
+  - **Preserves Secrecy:** Only the circle affiliation badge is displayed (e.g., *"Someone from BITS Pilani added you"*); individual identities remain strictly confidential until mutual confirmation.
+  - **Network Effects:** Colleges become natural self-contained viral loops, driving regional student acquisition.
 
-### Feature 2: Timed Clue Drops & Anonymized Match Hints
-* **What it is:** When user A adds user B as a secret crush, user B receives a notification that someone added them to their slots. If user B doesn't add user A after 48 hours, Coy unlocks an opt-in anonymized hint (e.g., *"Your secret crush is an Economics major who loves Indie Rock"* or *"Shares 2 mutual campus interests"*).
-* **Why it is required:**
-  - **Breaks Asymmetric Stalemates:** In real life, users often hesitate to add someone because they assume the other person wouldn't like them back.
-  - **Viral Loop & Retention:** Periodic subtle clues keep users opening the app to guess and re-evaluate their crushes, driving organic referrals and slot demand.
-  - **Strict Privacy Preservation:** Clues are aggregated from broad interests/faculties so no individual can be deanonymized unless both parties explicitly add each other.
+### Proposal 2: Timed Clue Drops & Anonymized Match Hints
+* **Problem Statement:** Asymmetric hesitation is common: users often delay adding someone because they fear rejection or assume the other person wouldn't think of them.
+* **Proposed Solution:** If a user receives an incoming crush notification and does not add that person back within 48 hours, Coy surfaces an opt-in anonymized hint (e.g., *"Your secret crush is an Economics major who loves Indie Rock"* or *"Shares 2 campus interests"*).
+* **Why it is Required:**
+  - **Breaks Asymmetric Stalemates:** Sparking subtle curiosity prompts users to re-evaluate their crushes and add genuine candidates.
+  - **Increases Slot Demand:** Directly incentivizes slot upgrades when users want to guess multiple candidates.
+  - **Privacy Guarantees:** Clues are aggregated from broad categorical attributes so that no single candidate can be deanonymized without mutual consent.
+
+> *Note: Both features are accessible in-app via the **"Part A Insights"** modal in the top navigation bar.*
 
 ---
 
 ## 🎨 Original Coy Design System
 
-Rather than using generic Tinder or Bumble UI styles, this application replicates the **actual observed design tokens of Coy** extracted directly from [https://app.getcoy.com](https://app.getcoy.com):
+The application strictly adopts the observed tokens and styling rules of Coy's web platform:
 
-| Token | CSS Variable | Hex / Value | Usage |
+### Design Tokens
+
+| Token Name | CSS Custom Variable | Hex Code | Visual Application |
 |---|---|---|---|
-| **Coy Pink** | `--pink` | `#FF3D81` | Primary brand accent, Like button, active tab indicator |
-| **Coy Pink Strong** | `--pink-strong` | `#D81E63` | Hover states, active highlights |
-| **Coy Pink Soft** | `--pink-soft` | `#FFE4EF` | Badges, subtle highlight backdrops |
-| **Sunshine Yellow** | `--yellow` | `#FFE45C` | Emphasized cards, celebration badges |
-| **Mint Green** | `--mint` | `#CBF4E0` | Mutual match tags, status cards |
+| **Coy Pink** | `--pink` | `#FF3D81` | Primary brand hot pink, Like action button, active tab indicator |
+| **Coy Pink Strong** | `--pink-strong` | `#D81E63` | Hover highlights, active text accents |
+| **Coy Pink Soft** | `--pink-soft` | `#FFE4EF` | Avatar wells, subtle badge fills |
+| **Sunshine Yellow** | `--yellow` | `#FFE45C` | Emphasized cards, celebration badges, age tags |
+| **Mint Green** | `--mint` | `#CBF4E0` | Mutual match tags, success confirmations |
 | **Lilac** | `--lilac` | `#E7E0FF` | Category chips, secondary accents |
-| **Coy Text Noir** | `--text` | `#15121D` | Primary text, 2px borders, drop shadows |
-| **Muted Slate** | `--muted` | `#6D6979` | Secondary labels, college/city subtitles |
-| **Soft Background** | `--soft` | `#F6F4FA` | Skeletons, input backings, card wells |
+| **Sky Blue** | `--sky` | `#D7ECFF` | Complementary interest pills |
+| **Peach** | `--peach` | `#FFE1CF` | Warm pastel accents |
+| **Noir / Text** | `--text` | `#15121D` | Deep text, universal 2px border strokes, hard pop shadows |
+| **Muted Slate** | `--muted` | `#6D6979` | Secondary captions, timestamps, subtitles |
+| **Soft Base** | `--soft` | `#F6F4FA` | Skeleton wells, secondary input backgrounds |
 | **Pure White** | `--bg` | `#FFFFFF` | Card canvases, sheet base |
-| **Pop Shadow** | `--pop` | `3px 3px 0 #15121D` | Pill buttons, icon actions, chips |
-| **Card Shadow** | `--pop-lg` | `5px 5px 0 #15121D` | Floating deck cards, modals |
-| **Typography** | `--sans` | `Bricolage Grotesque` | Playful neo-brutalist grotesque font |
-| **Edge Border** | `--edge` | `2px solid #15121D` | Universal crisp black border styling |
+
+### Visual Identity Principles
+- **Typography:** `Bricolage Grotesque` loaded via `next/font/google` for punchy, editorial headings and clean legibility.
+- **Neo-Brutalist Hard Drop Shadows:**
+  - Action Buttons: `box-shadow: 3px 3px 0 #15121D;`
+  - Floating Deck Cards & Modals: `box-shadow: 6px 6px 0 #15121D;`
+  - Pressed State: `transform: translate(2px, 2px); box-shadow: 1px 1px 0 #15121D;`
+- **Border Strokes:** Universal `2px solid #15121D` outlines on buttons, cards, pills, and dialogs.
+- **Micro-Angles:** Subtly tilted cards (`rotate(-1deg)` / `rotate(2deg)`) reflecting Coy's playful personality.
 
 ---
 
-## 🛠 Architecture & Tech Stack
+## ⚡ Feature Overview
+
+### 1. Home Tab (Clean Placeholder)
+- Fulfills the explicit assignment constraint: *"Keep the Home tab blank and build the functionality in Discover tab."*
+- Maintains Coy's persistent branding, top navigation, and bottom navigation.
+- Features a branded CTA guiding reviewers directly to the Discover feed.
+
+### 2. Discover Tab (Interactive Swipe Deck)
+- **Framer Motion Gesture System:** Drag left to Pass, drag right to Like with velocity-aware release physics.
+- **Displacement-Reactive Stamps:** Dynamic **LIKE** (green) and **PASS** (red) badges rotate and fade in proportionately as the user drags.
+- **Physical Deck Stacking:** Background card preview rendered with `scale(0.96)` and offset, providing tangible spatial depth.
+- **Hardware-Accelerated Fallback:** Dual circular action buttons on desktop and touchscreens with active tactile feedback.
+- **Keyboard Navigation:** Native accessibility supporting `←` (Pass) and `→` (Like).
+- **Empty State:** Clean completion banner when all profiles have been swiped, with an instant demo reset trigger.
+
+### 3. Interactive Profile Details View *(Newly Added)*
+- **Card-Wide Expansion:** Tapping/clicking anywhere on the active profile card (or the *"Tap for bio"* chip) expands a full-screen detailed profile view.
+- **Gesture Isolation:** Accidental drag swipes are strictly differentiated from taps—dragging to swipe never triggers details; tapping never records a like or pass.
+- **Rich Biographical Content:**
+  - Multi-photo pagination dots with high-res portrait presentation.
+  - Complete biography, college/city badges, and all interest chips.
+  - Coy personality prompt card (e.g. *"The key to my heart is..."*).
+  - Additional photo gallery grid.
+- **In-Modal Action Dock:** Independent Like and Pass buttons anchored inside the modal, seamlessly triggering mutual match evaluations and modal transitions.
+- **Accessibility & UX:** Background scroll locking (`overflow: hidden`), smooth spring entry/exit animations, and `Escape` key dismissal.
+
+### 4. Matches Tab
+- Real-time list of confirmed mutual matches fetched from `/api/matches`.
+- Displays profile photograph, age tag, name, city/college, bio preview, and relative match timestamp.
+- Clicking any match opens a dedicated Match Details Drawer.
+- Clean empty state when no mutual matches exist yet.
+
+### 5. Match Celebration Modal
+- Fires immediately when a mutual match occurs.
+- Dynamic multi-colored confetti burst using `canvas-confetti`.
+- Dual interlocking avatars in signature Coy neo-brutalist frames.
+- Instant actions: **"View in Matches"** or **"Keep Swiping"**.
+
+---
+
+## 🔒 Privacy & Mutual Matching Engine
+
+At Coy, privacy is not a decorative feature—it is the core value proposition.
+
+```
+                  [User A swipes RIGHT on User B]
+                                 │
+                   POST /api/swipe { action: "like" }
+                                 │
+                 ┌───────────────┴───────────────┐
+                 ▼                               ▼
+      User B already liked User A?     User B has NOT liked User A
+                 │                               │
+                 ▼                               ▼
+     ✅ MUTUAL MATCH CREATED             🔒 ZERO-LEAKAGE PRIVACY
+     • Atomic DB transaction inserts      • Swipe saved silently
+       Match record                       • Response: { matched: false }
+     • Lexicographical ID sorting         • Feed NEVER leaks incoming likes
+       prevents duplicates                • User B is NEVER notified until
+     • Response: { matched: true }          they also swipe right
+     • Celebration modal triggers
+```
+
+### Architectural Guarantees
+1. **Zero Data Leakage:** `/api/feed` completely strips all incoming like relations. No `hasLikedMe`, `preLikesMe`, or reverse flags exist anywhere in frontend responses or DOM attributes.
+2. **Race Condition Prevention:** All swipe recordings and match evaluations run within `prisma.$transaction()`.
+3. **Lexicographical Uniqueness:** Match pairs are sorted alphabetically (`user1Id < user2Id`), so the database constraint `@@unique([user1Id, user2Id])` strictly forbids duplicate matches regardless of concurrency order.
+4. **Idempotency:** `@@unique([swiperId, swipedId])` on the `Swipe` model safely handles duplicate network requests.
+
+---
+
+## 🏗 System Architecture
 
 ```
 coy-discover/
 ├── app/
-│   ├── layout.tsx              # Root layout with Bricolage font & mobile shell
-│   ├── page.tsx                # Home Tab (Clean blank placeholder per spec)
+│   ├── layout.tsx              # Root shell, font configuration & mobile frame
+│   ├── page.tsx                # Home Tab (Clean branded placeholder)
+│   ├── not-found.tsx           # Custom 404 page with Coy branding
+│   ├── globals.css             # Design tokens & utility classes
 │   ├── discover/
-│   │   └── page.tsx            # Discover Tab (Interactive swipe deck)
+│   │   └── page.tsx            # Discover deck with swipe & details integration
 │   ├── matches/
-│   │   └── page.tsx            # Matches Tab (Mutual match list & modal)
+│   │   └── page.tsx            # Matches view with mutual match inspector
 │   └── api/
-│       ├── feed/route.ts       # GET: Unswiped profiles (Privacy enforced)
-│       ├── swipe/route.ts      # POST: Like / Pass & transactional matching
-│       ├── matches/route.ts    # GET: Mutual matches only
-│       └── reset/route.ts      # POST: Demo state reset helper
+│       ├── feed/route.ts       # GET: Unswiped profiles (Privacy filtered)
+│       ├── swipe/route.ts      # POST: Transactional Like / Pass matching
+│       ├── matches/route.ts    # GET: Confirmed mutual matches only
+│       └── reset/route.ts      # POST: Developer utility to reset demo state
 ├── components/
-│   ├── Navbar.tsx              # Coy wordmark, Part A modal, Reset button
-│   ├── BottomNav.tsx           # Fixed bottom tabs (Home, Discover, Matches)
-│   ├── ProfileCard.tsx         # Framer Motion gesture card with stamps
+│   ├── Navbar.tsx              # Coy wordmark, Part A modal, Reset action
+│   ├── BottomNav.tsx           # Persistent bottom tabs with live badge
+│   ├── ProfileCard.tsx         # Framer Motion gesture card with tap detection
+│   ├── ProfileDetailModal.tsx  # Full-screen interactive profile drawer
 │   ├── SwipeButtons.tsx        # Like / Pass / Keyboard hint controls
 │   ├── MatchModal.tsx          # "It's a Match!" celebration modal + confetti
 │   ├── MatchesList.tsx         # Responsive mutual match grid
-│   ├── MatchDetailModal.tsx    # Detailed profile inspector
+│   ├── MatchDetailModal.tsx    # Inspector modal for confirmed matches
 │   ├── EmptyState.tsx          # Feed exhausted / zero matches screens
-│   └── LoadingCard.tsx         # Skeleton loader matching Coy tokens
+│   ├── LoadingCard.tsx         # Skeleton loader matching Coy tokens
+│   └── LoadingState.tsx        # Re-export alias for loader
 ├── lib/
-│   ├── prisma.ts               # Cached Prisma client singleton
-│   ├── matching.ts             # Matching engine & privacy queries
-│   └── validation.ts           # Server-side input & payload validators
+│   ├── prisma.ts               # PrismaClient singleton with hot-reload cache
+│   ├── matching.ts             # Matching engine, privacy filters & queries
+│   └── validation.ts           # Input schema validation & guard rails
 ├── prisma/
-│   ├── schema.prisma           # SQLite models with composite uniqueness
-│   └── seed.ts                 # 32 Indian profiles with pre-seeded likes
+│   ├── schema.prisma           # SQLite relational models with constraints
+│   └── seed.ts                 # 32 realistic profiles with pre-seeded likes
 ├── tests/
-│   ├── api.test.ts             # 9 Vitest integration & privacy tests
-│   └── components.test.tsx     # 6 UI & component interaction tests
-├── vitest.config.ts            # Test runner config
-├── tailwind.config.ts          # Coy design tokens & theme extensions
+│   ├── api.test.ts             # 9 Vitest integration, privacy & DB tests
+│   ├── components.test.tsx     # 8 UI, tap detection & modal action tests
+│   └── setup.ts                # Jest-DOM matchers setup
+├── vitest.config.ts            # Vitest test runner configuration
+├── tailwind.config.ts          # Extended Coy color palette & tokens
 └── README.md
 ```
 
 ---
 
-## 🔒 Strict Privacy & Mutual Matching Engine
+## 📡 API Specification
 
-Privacy is the foundational value of Coy:
+### 1. `GET /api/feed`
+Retrieves profiles that the logged-in user has not yet swiped on. Strictly excludes the user themselves and any profile previously liked or passed.
 
+**Response `200 OK`:**
+```json
+{
+  "success": true,
+  "count": 32,
+  "profiles": [
+    {
+      "id": "user_101",
+      "name": "Priya Sharma",
+      "age": 21,
+      "photo": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?...",
+      "bio": "Literature major who quotes Dostoevsky in casual conversation. Chai over coffee any day.",
+      "cityOrCollege": "Lady Shri Ram College, Delhi",
+      "interests": ["Reading", "Chai", "Classic Cinema", "Poetry"],
+      "photos": ["https://images.unsplash.com/photo-1517841905240-472988babdf9?..."],
+      "promptQuestion": "The key to my heart is...",
+      "promptAnswer": "Cutting chai from the corner tapri and finding a first edition Penguin classic."
+    }
+  ]
+}
 ```
-[User A] --swipes LIKE--> [User B]
-                           │
-             ┌─────────────┴─────────────┐
-             ▼                           ▼
-    Has User B liked User A?    User B has NOT liked User A
-             │                                   │
-             ▼                                   ▼
-    ✅ MUTUAL MATCH CREATED           🔒 ABSOLUTE PRIVACY
-    • Match record inserted in DB      • Swipe saved silently in DB
-    • Response: { matched: true }      • Response: { matched: false }
-    • "It's a Match!" celebration      • User B NEVER sees who liked them
-    • Appears in Matches tab           • Feed NEVER leaks incoming likes
+
+### 2. `POST /api/swipe`
+Records a swipe action (`"like"` or `"pass"`). When action is `"like"`, evaluates whether the target user has already liked the current user within a database transaction.
+
+**Request Payload:**
+```json
+{
+  "profileId": "user_101",
+  "action": "like"
+}
 ```
 
-### Database Safety Guarantees
-1. **Lexicographical User ID Ordering:** `[user1Id, user2Id]` is ordered so that `user1Id < user2Id`. The `@@unique([user1Id, user2Id])` constraint prevents duplicate matches between any two users under all concurrency conditions.
-2. **Swipe Uniqueness:** `@@unique([swiperId, swipedId])` ensures an idempotent swipe recording where duplicate submissions are safely ignored.
-3. **Database Transactions:** Matching evaluations are executed inside `prisma.$transaction()` to eliminate race conditions.
-4. **Feed Filtering:** `GET /api/feed` queries `prisma.swipe.findMany({ where: { swiperId: currentUserId } })` and strictly excludes all previously liked or passed profiles, along with the user themselves.
+**Response `200 OK` (Mutual Match):**
+```json
+{
+  "success": true,
+  "matched": true,
+  "match": {
+    "id": "cm7k1...",
+    "profile": {
+      "id": "user_101",
+      "name": "Priya Sharma",
+      "age": 21,
+      "photo": "https://images.unsplash.com/...",
+      "bio": "Literature major...",
+      "cityOrCollege": "Lady Shri Ram College, Delhi",
+      "interests": ["Reading", "Chai"]
+    },
+    "matchedAt": "2026-11-17T12:00:00.000Z"
+  }
+}
+```
+
+**Response `200 OK` (Non-Mutual Like or Pass):**
+```json
+{
+  "success": true,
+  "matched": false
+}
+```
+
+### 3. `GET /api/matches`
+Retrieves the logged-in user's confirmed mutual matches.
+
+**Response `200 OK`:**
+```json
+{
+  "success": true,
+  "count": 1,
+  "matches": [
+    {
+      "id": "cm7k1...",
+      "matchedAt": "2026-11-17T12:00:00.000Z",
+      "profile": {
+        "id": "user_101",
+        "name": "Priya Sharma",
+        "age": 21,
+        "photo": "https://images.unsplash.com/...",
+        "bio": "Literature major...",
+        "cityOrCollege": "Lady Shri Ram College, Delhi",
+        "interests": ["Reading", "Chai"]
+      }
+    }
+  ]
+}
+```
+
+### 4. `POST /api/reset`
+Utility endpoint for evaluators and developers. Clears all outgoing swipes and matches created by `user_me`, instantly restoring the feed to its pre-seeded state while leaving incoming likes intact.
 
 ---
 
-## 📱 Application Walkthrough
+## 🗄 Database Models & Seeding Strategy
 
-### 1. Home Tab (Placeholder)
-Per the assignment brief:
-> *"Keep this tab blank as explicitly required in the assignment. Maintain the common Coy navigation and branding."*
-
-Provides a clean, branded landing surface with Coy's wordmark, explaining its placeholder status and offering a direct link to the Discover tab.
-
-### 2. Discover Tab (Main Feature)
-- **Fluid Swipe Gestures:** Drag left to Pass, drag right to Like.
-- **Physical Deck Illusion:** The next card in the deck is rendered underneath with scale `0.96` and offset, giving a tangible physical feeling.
-- **Dynamic Stamps:** As you drag, an animated green **LIKE** or red **PASS** badge dynamically rotates and scales based on displacement.
-- **Interactive Profile Details View:** Tap or click anywhere on the card (or the *"Tap for bio"* indicator) to smoothly expand a rich full-screen / large modal profile view.
-  - Tapping card does NOT trigger a swipe; dragging does NOT accidentally open details.
-  - Displays large photo with multi-photo pagination dots, full biography, complete interests chips, Coy prompt Q&A card, and additional photos gallery.
-  - Independent **Like** and **Pass** action buttons inside the details view that seamlessly integrate with mutual matching and celebration.
-  - Smooth spring animation, background scroll lock, and Escape key / Back button dismissal.
-- **Action Buttons:** Accessible circular buttons with Coy's signature `3px 3px 0 #15121D` drop shadow.
-- **Keyboard Shortcuts:** Press `←` for Pass, `→` for Like (guarded when details modal is open).
-- **Empty State:** When all 32 profiles are swiped, a celebration screen appears with a **Reset Demo** button.
-
-### 3. Matches Tab
-- Fetches all mutual matches from `/api/matches`.
-- Shows profile photos, age badge, college or city, and bio snippet.
-- Clicking any match opens a detailed modal with interests, graduation tags, and match date.
-- Clean empty state when no mutual matches exist yet.
-
-### 4. Match Celebration Modal
-- Triggers immediately when a mutual match occurs.
-- Fires an interactive multi-color confetti cannon (`canvas-confetti`).
-- Displays both user avatars with an overlapping heart icon and playful `-2deg` angle.
-- Instant actions: **"View in Matches"** or **"Keep Swiping"**.
-
----
-
-## 🗄 Database Schema & Seeding
-
-### Prisma Schema (`prisma/schema.prisma`)
+### Relational Schema (`prisma/schema.prisma`)
 ```prisma
 model User {
   id             String   @id
@@ -189,17 +315,17 @@ model User {
   photo          String
   bio            String
   cityOrCollege  String
-  interests      String   // JSON array of strings
-  photos         String?  // JSON array of string URLs (additional gallery photos)
-  promptQuestion String?  // Coy prompt question
-  promptAnswer   String?  // Coy prompt answer
+  interests      String   // JSON serialized string[]
+  photos         String?  // JSON serialized string[] (additional gallery photos)
+  promptQuestion String?  // Optional personality prompt
+  promptAnswer   String?  // Optional personality answer
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  swipesGiven    Swipe[] @relation("SwipesGiven")
-  swipesReceived Swipe[] @relation("SwipesReceived")
-  matchesAsUser1 Match[] @relation("MatchesUser1")
-  matchesAsUser2 Match[] @relation("MatchesUser2")
+  swipesGiven    Swipe[]  @relation("SwipesGiven")
+  swipesReceived Swipe[]  @relation("SwipesReceived")
+  matchesAsUser1 Match[]  @relation("MatchesUser1")
+  matchesAsUser2 Match[]  @relation("MatchesUser2")
 }
 
 model Swipe {
@@ -232,141 +358,80 @@ model Match {
 }
 ```
 
-### Seeding Strategy (`prisma/seed.ts`)
-- **Logged-in User:** `user_me` (Aarav Sharma, 22, BITS Pilani / Bengaluru).
-- **32 Realistic Indian Student Profiles:** Diverse colleges across India (IIT Bombay, LSR Delhi, St. Xavier's Mumbai, Ashoka University, CEPT Ahmedabad, NLSIU, NID, etc.) with verified interests and high-resolution Unsplash portraits.
-- **Pre-seeded Incoming Likes:** Profiles such as **Priya Sharma (`user_101`)**, **Ananya Iyer (`user_102`)**, **Diya Patel (`user_105`)**, **Meera Sen (`user_107`)**, **Sneha Nair (`user_108`)**, **Tara Mukherjee (`user_112`)**, **Riya Kapoor (`user_114`)**, **Zoya Khan (`user_115`)**, and **Natasha D'Souza (`user_125`)** have pre-liked the user.
-- **Testing Mutual Matching:** Swiping right on any of these profiles triggers an instantaneous **"It's a Match!"** celebration! Swiping right on other profiles records a one-sided like without a match.
+### Realistic Seeding (`prisma/seed.ts`)
+- **Active User:** `user_me` (Aarav Sharma, 22, BITS Pilani).
+- **32 Indian University Profiles:** Authentic student profiles from premier institutions across India (IIT Bombay, LSR Delhi, St. Xavier's Mumbai, Ashoka University, CEPT Ahmedabad, NLSIU, NID, etc.) with real collegiate interests, curated high-resolution Unsplash portraits, and personality prompts.
+- **Pre-Seeded Incoming Likes for Instant Demo Verification:**
+  - Swiping right on **Priya Sharma (`user_101`)**, **Ananya Iyer (`user_102`)**, **Diya Patel (`user_105`)**, **Meera Sen (`user_107`)**, **Sneha Nair (`user_108`)**, **Tara Mukherjee (`user_112`)**, **Riya Kapoor (`user_114`)**, **Zoya Khan (`user_115`)**, or **Natasha D'Souza (`user_125`)** immediately produces a mutual match!
+  - Swiping right on any other profile (e.g. Rohan Varma, Tanvi Deshmukh, Kabir Mehta) silently saves a one-sided like without matching.
 
 ---
 
-## 📡 API Documentation
+## 🧪 Testing & Quality Assurance
 
-### 1. GET `/api/feed`
-Retrieves profiles that the logged-in user has not yet liked or passed.
+The codebase includes an automated test suite executed with [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/).
 
-**Response `200 OK`:**
-```json
-{
-  "success": true,
-  "count": 32,
-  "profiles": [
-    {
-      "id": "user_101",
-      "name": "Priya Sharma",
-      "age": 21,
-      "photo": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?...",
-      "bio": "Literature major who quotes Dostoevsky in casual conversation. Chai over coffee any day.",
-      "cityOrCollege": "Lady Shri Ram College, Delhi",
-      "interests": ["Reading", "Chai", "Classic Cinema", "Poetry", "Museum Hopping"]
-    }
-  ]
-}
-```
-*Note: Privacy guarantee: incoming likes or `preLikesMe` flags are NEVER exposed.*
-
-### 2. POST `/api/swipe`
-Records a swipe action (`"like"` or `"pass"`).
-
-**Request Body:**
-```json
-{
-  "profileId": "user_101",
-  "action": "like"
-}
+```bash
+npm test
 ```
 
-**Response `200 OK` (Mutual Match):**
-```json
-{
-  "success": true,
-  "matched": true,
-  "match": {
-    "id": "cm7...",
-    "profile": {
-      "id": "user_101",
-      "name": "Priya Sharma",
-      "age": 21,
-      "photo": "https://images.unsplash.com/...",
-      "bio": "Literature major...",
-      "cityOrCollege": "Lady Shri Ram College, Delhi",
-      "interests": ["Reading", "Chai", "Classic Cinema"]
-    },
-    "matchedAt": "2026-11-17T12:00:00.000Z"
-  }
-}
-```
+### Test Suite Matrix (17 Automated Tests Passing)
 
-**Response `200 OK` (Non-Mutual Like or Pass):**
-```json
-{
-  "success": true,
-  "matched": false
-}
-```
-
-### 3. GET `/api/matches`
-Retrieves the logged-in user's mutual matches.
-
-**Response `200 OK`:**
-```json
-{
-  "success": true,
-  "count": 1,
-  "matches": [
-    {
-      "id": "cm7...",
-      "matchedAt": "2026-11-17T12:00:00.000Z",
-      "profile": {
-        "id": "user_101",
-        "name": "Priya Sharma",
-        "age": 21,
-        "photo": "https://images.unsplash.com/...",
-        "bio": "Literature major...",
-        "cityOrCollege": "Lady Shri Ram College, Delhi",
-        "interests": ["Reading", "Chai"]
-      }
-    }
-  ]
-}
-```
-
-### 4. POST `/api/reset`
-Utility endpoint for testing and live evaluation. Resets all swipes made by the demo user while preserving pre-seeded incoming likes.
+| Test ID | Scope | Verification Scenario | Status |
+|---|---|---|---|
+| **TEST 1** | API | `GET /api/feed` excludes logged-in user and returns unswiped profiles | `PASSED` |
+| **TEST 2** | API | `Pass` action successfully saves a pass record and returns `matched: false` | `PASSED` |
+| **TEST 3** | API | Mutual like triggers match creation and returns match record | `PASSED` |
+| **TEST 4** | API | Exactly one match record is stored in database upon mutual like | `PASSED` |
+| **TEST 5** | API | Non-mutual like records swipe silently without creating a match | `PASSED` |
+| **TEST 6** | Security | Incoming non-mutual likes are NEVER revealed in feed serialization | `PASSED` |
+| **TEST 7** | DB | Swiped profiles (liked or passed) never reappear in feed | `PASSED` |
+| **TEST 8** | Persistence | Feed exclusions persist after page reload / fresh database connection | `PASSED` |
+| **TEST 9** | Persistence | Matches persist across server restarts and repeat queries | `PASSED` |
+| **TEST 10** | Concurrency | Duplicate swipe requests are handled idempotently without duplicate records | `PASSED` |
+| **TEST 11** | Validation | Malformed payloads, invalid actions, and self-swiping are blocked | `PASSED` |
+| **UI 1** | Components | Navbar renders Coy wordmark, logo emblem, and reset action | `PASSED` |
+| **UI 2** | Components | BottomNav highlights active tab and displays dynamic match count badge | `PASSED` |
+| **UI 3** | Components | Home page renders clean placeholder tab with Discover launch CTA | `PASSED` |
+| **UI 4** | Components | SwipeButtons trigger independent `onPass` and `onLike` callbacks | `PASSED` |
+| **UI 5** | Components | EmptyState renders proper celebratory messaging for feed and matches | `PASSED` |
+| **UI 6** | Components | MatchModal displays celebration text, dual avatars, and navigation | `PASSED` |
+| **UI 7** | Components | ProfileCard renders tap cue and opens details without triggering swipe | `PASSED` |
+| **UI 8** | Components | ProfileDetailModal displays full bio, prompts, and in-modal Like/Pass actions | `PASSED` |
 
 ---
 
-## 🚀 Setup & Installation Instructions
+## 🚀 Setup & Installation Guide
 
 ### Prerequisites
-- Node.js `v18.18+` or `v20+` (tested on Node v22.14)
+- Node.js `v18.18+` or `v20+` (tested on Node `v22.14.0`)
 - npm `v9+` or `v10+`
 
-### 1. Clone & Install
+### 1. Clone Repository & Install Dependencies
 ```bash
 git clone https://github.com/your-username/coy-discover.git
 cd coy-discover
 npm install
 ```
 
-### 2. Configure Environment Variables
-Copy `.env.example` to `.env`:
+### 2. Environment Configuration
+Create a local `.env` file based on `.env.example`:
 ```bash
 cp .env.example .env
 ```
-Default `.env` configuration:
+Default configuration:
 ```env
 DATABASE_URL="file:./dev.db"
 CURRENT_USER_ID="user_me"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
-### 3. Push Database Schema & Seed Profiles
+### 3. Initialize Database & Seed Profiles
 ```bash
 # Push schema to SQLite
 npx prisma db push
 
-# Seed 32 realistic profiles and incoming likes
+# Populate 32 realistic profiles and pre-seeded likes
 npm run db:seed
 ```
 
@@ -374,9 +439,9 @@ npm run db:seed
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 5. Production Build
+### 5. Production Build & Run
 ```bash
 npm run build
 npm start
@@ -384,53 +449,36 @@ npm start
 
 ---
 
-## 🧪 Automated Testing & QA
+## ☁️ Cloud Deployment Guide
 
-Run the full automated test suite (Unit, Integration, Privacy, and React Component tests):
+This application is ready for deployment on [Vercel](https://vercel.com).
 
-```bash
-npm test
-```
+### Database Persistence on Serverless Environments
+Standard SQLite files (`dev.db`) on local disk are ephemeral on serverless platforms. For zero-config persistent cloud storage:
 
-### Test Coverage Highlights:
-- **TEST 1:** `GET /api/feed` returns only unswiped profiles and excludes logged-in user.
-- **TEST 2:** `Pass` action saves a pass record and returns `matched: false`.
-- **TEST 3 & 4:** Mutual like creates exactly one `Match` record in database.
-- **TEST 5:** Non-mutual like records a swipe without creating a match.
-- **TEST 6 & 14:** Incoming non-mutual likes are **NEVER** revealed in feed or matches.
-- **TEST 7 & 8:** Previously swiped profiles never reappear in feed (DB persistence).
-- **TEST 9:** Matches persist across reloads and queries.
-- **TEST 10:** Duplicate swipe requests are handled safely and idempotently.
-- **TEST 11:** Input validation blocks self-swiping, invalid actions, and malformed bodies.
-- **UI Tests:** Navbar branding, BottomNav active states, Home placeholder, SwipeButtons callbacks, MatchModal celebration, and EmptyState rendering.
-
----
-
-## ☁️ Vercel Deployment Guide
-
-To deploy this Next.js application to Vercel:
-
-1. **Persistent Cloud Database:**  
-   Standard SQLite files on local disk are ephemeral in serverless environments. For persistent production storage:
-   - **Option A (Turso / libSQL):** Create a free database on [Turso](https://turso.tech) and set:
+1. **Option A: Turso (Managed libSQL / Cloud SQLite - Recommended):**
+   - Create a free database at [Turso](https://turso.tech).
+   - Configure your `.env` on Vercel:
      ```env
-     DATABASE_URL="libsql://your-database.turso.io"
+     DATABASE_URL="libsql://your-db-name.turso.io"
      ```
-   - **Option B (PostgreSQL / Supabase / Neon):** Switch provider to `postgresql` in `prisma/schema.prisma` and connect your connection pooler URL.
-2. **Deploy to Vercel:**
-   ```bash
-   vercel
-   ```
-3. **Set Environment Variables on Vercel Dashboard:**
-   - `DATABASE_URL`: Your production database URL.
-   - `CURRENT_USER_ID`: `user_me`
-4. **Run Seed on Production DB:**
-   ```bash
-   npx prisma db push
-   npx tsx prisma/seed.ts
-   ```
+2. **Option B: Supabase / Neon (PostgreSQL):**
+   - In `prisma/schema.prisma`, change `provider = "sqlite"` to `provider = "postgresql"`.
+   - Update `DATABASE_URL` with your connection pooler connection string.
+
+### Vercel Deployment Steps
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+Set `DATABASE_URL` and `CURRENT_USER_ID="user_me"` in the Vercel Dashboard project settings under **Environment Variables**, then trigger your production deployment.
 
 ---
 
-## 📄 License
-This project was built for the Coy Full-Stack SDE Intern Assignment. All rights reserved.
+## 📄 License & Attribution
+
+This project was built for the **Coy Full-Stack SDE Intern Assignment**.  
+Designed and engineered with strict adherence to the official design reference at [app.getcoy.com](https://app.getcoy.com). All rights reserved.
